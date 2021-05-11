@@ -7,3 +7,13 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 
+User.destroy_all
+
+10.times do
+
+    User.create(island_name: Faker::Movies::HarryPotter.location,
+                username: Faker::Movies::HarryPotter.character,
+                email: Faker::Internet.email,
+                password: "123")
+
+end
