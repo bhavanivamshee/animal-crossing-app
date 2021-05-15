@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :materials
   get '/test', to: "diys#get_diys"
   resources :diys
   resources :users
