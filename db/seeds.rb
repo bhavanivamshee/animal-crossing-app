@@ -6,6 +6,9 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
+require 'rest-client'
+require 'faraday'
+require 'pry'
 
 User.destroy_all
 
@@ -17,3 +20,23 @@ User.destroy_all
                 password: "123")
 
 end
+
+resp = RestClient::Request.execute(method: :get,
+url: "https://api.nookipedia.com/nh/recipes",
+headers:{
+    'X-API-KEY': ENV['NOOK_KEY']
+    })
+ diy_data = JSON.parse(resp.body)
+ diys = diy_data
+
+ Diy.destroy_all
+
+    diys.each do |diy|
+        Diy.create(
+           name: diy["name"],
+           url: diy["url"],
+           image_url: diy["image_url"],
+           recipes_to_unlock: diy["recipes_to_unlock"],
+      )
+    end
+    
